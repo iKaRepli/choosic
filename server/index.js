@@ -18,7 +18,13 @@ const io = new SocketServer(server,{
 })
 
 io.on('connection', socket => {
-  console.log("Usuario conectado " + socket.id.split(3))   
+  console.log("Usuario conectado " + socket.id)   
+
+  socket.on('disconnect',() => {
+    console.log(`Usuario ${socket.id} desconectado`)
+  })
+
+
 })
 
 server.listen(port, () => {

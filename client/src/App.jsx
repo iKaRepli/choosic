@@ -1,21 +1,19 @@
-import './index.css'
-import io from 'socket.io-client'
-
-import imagen from './1.jpeg'
-
-const socket = io("http://localhost:3000")
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Register from "./pages/register";
+import Options from "./pages/options"
+import InputRoom from "./pages/rommInput";
+import Login from "./pages/login";
 
 export default function App() {
   return (
-    <div className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">
-      <div className="shrink-0">
-        <img className="h-12 w-12" src={imagen} alt="hola"/>
-      </div>
-      <div>
-        <div className="text-xl font-medium text-black">hola</div>
-        <p className="text-slate-500">asdasd</p>
-      </div>
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="/room" element = {<InputRoom></InputRoom>}></Route>
+        <Route path="/" element={<Options />} />
+        <Route path="/login" element={<Login />}></Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
-
