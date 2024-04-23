@@ -1,18 +1,17 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Register from "./pages/register";
+import Principal from "./pages/principal";
 import Options from "./pages/options"
 import InputRoom from "./pages/rommInput";
-import Login from "./pages/login";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Principal />} />
         <Route path="/room" element = {<InputRoom></InputRoom>}></Route>
-        <Route path="/" element={<Options />} />
-        <Route path="/login" element={<Login />}></Route>
+        <Route path="/options" element={<Options />} />
+        <Route path="/login" element={<InputRoom></InputRoom>}></Route>
       </Routes>
     </BrowserRouter>
   );

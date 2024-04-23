@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import './index.css'
 import App from './App';
 import Options from './pages/options';
+import { MiContextoProvider } from './context/contextoUsuario';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <MiContextoProvider>
     <App></App>
-  </React.StrictMode>,
+  </MiContextoProvider>
 )

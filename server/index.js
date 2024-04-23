@@ -2,13 +2,18 @@ import express from 'express'
 import logger from 'morgan'
 import  http  from 'http'
 import { Server as SocketServer} from 'socket.io'
+import cors from 'cors'
 
 
-const port = process.env.PORT ?? 3000
+import { createUser, getUserById, getUserByName } from './controllers/userControllers.js';
+
+
+const port = process.env.PORT ?? 3003
 
 const app = express()
-
+app.use(cors())
 app.use(logger('dev'))
+app.use(express.json());
 
 const server = http.createServer(app)
 const io = new SocketServer(server,{
@@ -26,6 +31,10 @@ io.on('connection', socket => {
 
 
 })
+
+app.get('/api/users/:id/:password',getUserById)
+app.get('/api/name/:userName',getUserByName)
+app.post('/api/register',createUser)
 
 server.listen(port, () => {
   console.log(`Servidor Express escuchando en el puerto ${port}`);
