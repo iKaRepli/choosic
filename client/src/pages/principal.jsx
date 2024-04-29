@@ -15,7 +15,7 @@ export default function Principal() {
         event.preventDefault()
         if (handleData()) {
             alert("Todo correcto")
-            const socket = io("http://localhost:3000")
+            const socket = io("https://028rplm3-3003.usw3.devtunnels.ms/")
         }
     }
 
@@ -85,21 +85,37 @@ export default function Principal() {
         setIsLogged(false);
 
     }
+    async function createUser() {
+        const url = 'http://localhost:3003/api/register'; // La URL a la que quieres enviar la solicitud POST
+        const data = {
+          userName: 'pele',
+          password: '123456'
+        };
+      
+        try {
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+      
+          if (!response.ok) {
+            throw new Error('Error al crear el usuario: ' + response.status);
+          }
+      
+          const responseData = await response.json();
+          console.log(responseData);
+        } catch (error) {
+          console.error('Error al hacer la solicitud POST:', error);
+        }
+      }
+      
+      
 
     return (
         <div className='my-container h-screen flex flex-col  bg-gradient-to-r from-emerald-950 to-green-700'>
-            <button className='bg-gray-500 hover:bg-gray-600 duration-150 text-white px-4 py-2 rounded-md' onClick={handleLogin}>
-                poner cookies
-            </button>
-            <button onClick={handleLogout}>
-                Quitar cookies
-            </button>
-            <div>
-                {getCookie("userId")}
-            </div>
-            <div>
-                {getCookie("userPassword")}
-            </div>
             {
                 isLoading ? (
                     <div className='items-center flex flex-col justify-center h-full w-full'>

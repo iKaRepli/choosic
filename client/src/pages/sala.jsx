@@ -1,19 +1,19 @@
 
 import io from 'socket.io-client'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 
 
 
-export default function InputRoom() {
-    const [connection, setConecction] = useState(false)
+export default function Room() {
+    const {codigoSala} = useParams()
 
     return (
         <div className='bg-gradient-to-r from-emerald-950 to-green-700'>
             <div className="container divide-y-reverse">
                 <Link to="/"><button className="bg-amber-950 hover:bg-amber-900 text-white font-bold py-2 px-4 rounded m-4 justify-start">
-                    Inicio
+                    SA    {codigoSala}
                 </button>
                 </Link>
             </div>
@@ -24,17 +24,7 @@ export default function InputRoom() {
                             <h1 className="text-3xl font-bold mb-4 text-slate-900">Ingresa la sala</h1>
                             <input type="text" className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' placeholder="Ingrese la sala" />
                         </div>
-                        <div className="mt-4">
-                            <button
-
-                                className="bg-amber-900 hover:bg-amber-950 duration-100 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            >
-                                OK
-                            </button>
-
-                        </div>
                     </form>
-
                 </div>
 
             </div>

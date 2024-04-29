@@ -36,8 +36,6 @@ function Authsl() {
         }else{
             
             const response = await fetch(`http://localhost:3003/api/name/${userNameT}`);
-
-    
             
             if (response.ok) {
                 const data = await response.json()
@@ -96,16 +94,17 @@ function Authsl() {
                                 console.log("Como estas")
                                 const data = await response2.json()
                                 setUserId(data.user_id)
-                                setUserExist(true);
+                                
                                 document.cookie = `userId=${data.user_id}; expires=Thu, 01 Jan 2070 00:00:00 UTC; path=/;`;
                                 document.cookie = `userPassword=${password.password1}; expires=Thu, 01 Jan 2070 00:00:00 UTC; path=/;`;
                                 console.log('Usuario creado exitosamente',userId,getCookie("userId"));
+                                navigate("/options")
                                 
                             }
                 
             
                           } else {
-                            console.error('Error al crear el usuario:', response.statusText);
+                            console.error('Error al crear el usuario:', response1.statusText);
             
                           }
             
@@ -180,7 +179,7 @@ function Authsl() {
                 <input
                     className="shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     name="username"
-                    type="text"
+                    type="password"
                     onChange={(e) => setPassword({...password, password1: e.target.value})}
                     placeholder="Ingrese la contraseña"
 
@@ -189,7 +188,7 @@ function Authsl() {
                 <input
                     className="shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     name="username"
-                    type="text"
+                    type="password"
                     onChange={(e) => setPassword({...password, password2: e.target.value})}
                     placeholder="Confirmar contraseña"
 
