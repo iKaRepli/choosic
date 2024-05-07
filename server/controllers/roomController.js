@@ -33,13 +33,14 @@ export async function createRoom(req, res) {
 
 export async function joinRoom(req, res){
     try{
-        const {userId, roomId} = req.body
+        const {userId, roomCode} = req.body
+        console.log("Hpña",userId,roomCode)
 
-        await connection.execute('insert into user_in_room (user_id, room_id) values (?, ?)',[userId,roomId])
+        await connection.execute('call AssignUserToRoom(?,?)',[userId,roomCode])
 
-        res.status(201).json({message: "Usuario ingresado a la sala correctamente"})
+        return { statusCode: 200, message: "Usuario ingresado a la sala correctamente" };
     }catch (err){
-        res.status(500).json({message_: "error al ingresar usuario"}, err)
+      return { statusCode: 500, message: "Error al ingresar al usuario" };
     }
 }
 

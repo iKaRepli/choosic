@@ -25,19 +25,12 @@ const io = new SocketServer(server, {
 io.on('connection', socket => {
   console.log("Usuario conectado " + socket.id)
 
-  socket.on('create-room', async ({ roomCode }) => {
-    try {
-      await createRoom(roomCode)
-
-    } catch (err) {
-      console.log("Error al crear la sala", err)
-    }
-  })
-
   socket.on('join-room', async ({ userId, roomId }) => {
     try {
-      await joinRoom({ userId: userId, roomId: roomId })
+      console.log("Hpla como estas", userId, roomId)
+      await joinRoom({ body: { userId, roomCode: roomId } });
       socket.join(roomId)
+      console.log(`Usuario ${socket.id} conectado`)
       io.to(roomId).emit('user-joined', userId)
     } catch (err) {
       console.log(err)
@@ -56,6 +49,7 @@ app.get('/api/users/:id/:password', getUserById)
 app.get('/api/name/:userName', getUserByName)
 app.get('/api/room/:roomCode', getRoomByName)
 app.post('/api/register', createUser)
+app.post('/api/createRoom', createRoom)
 
 server.listen(port, () => {
   console.log(`Servidor Express escuchando en el puerto ${port}`);

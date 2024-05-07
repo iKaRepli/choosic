@@ -43,7 +43,7 @@ export default function Principal() {
                 const data = await response.json()
 
                 if (userValues.userIds != data.user_id) {
-                    console.log(data)
+                    console.log("hola como estas", data)
                     setisLoafing(false)
                     setIsLogged(true)
                     setUserValues({
@@ -62,17 +62,6 @@ export default function Principal() {
         fetchData()
     }, [])
 
-    const handleLogin = () => {
-        document.cookie = "userId=1; expires=Thu, 01 Jan 2070 00:00:00 UTC; path=/;";
-        document.cookie = "userPassword=12345; expires=Thu, 01 Jan 2070 00:00:00 UTC; path=/;";
-        setUserValues({
-            userName: "isaac",
-            userIds: "1",
-            userPasswords: "12345"
-        });
-        setIsLogged(true);
-
-    }
 
     const handleLogout = () => {
         document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";

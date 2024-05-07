@@ -63,6 +63,7 @@ function Authsl() {
             console.log("El usuario y contraseña son correctos",userName)
             document.cookie = `userId=${userId}; expires=Thu, 01 Jan 2070 00:00:00 UTC; path=/;`;
             document.cookie = `userPassword=${UserPassword}; expires=Thu, 01 Jan 2070 00:00:00 UTC; path=/;`;
+            setUserData({...userData,userId,userName})
             navigate("/options")
 
         } else {
@@ -89,7 +90,7 @@ function Authsl() {
                             const response2 = await fetch(`http://localhost:3003/api/name/${userName}`);
             
                 
-                            console.log("Hola")
+
                             if (response2.ok) {
                                 console.log("Como estas")
                                 const data = await response2.json()
@@ -97,7 +98,8 @@ function Authsl() {
                                 
                                 document.cookie = `userId=${data.user_id}; expires=Thu, 01 Jan 2070 00:00:00 UTC; path=/;`;
                                 document.cookie = `userPassword=${password.password1}; expires=Thu, 01 Jan 2070 00:00:00 UTC; path=/;`;
-                                console.log('Usuario creado exitosamente',userId,getCookie("userId"));
+                                console.log('Usuario creado exitosamente',data.user_id,getCookie("userId"));
+                                setUserData({...userData,userId:data.user_id, userName})
                                 navigate("/options")
                                 
                             }

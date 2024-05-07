@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
+
 export default function Join(props) {
+
+
     return (
+        
         <div className="container mx-auto p-8 items-center flex flex-col justify-center h-full w-full">
 
             <form action="" className="bg-green-100 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-content md:w-2/3 lg:w-1/2 xl:w-1/3 mx-auto text-center">
@@ -18,7 +22,7 @@ export default function Join(props) {
 
                 <div className="mb-4 ">
                     <Link to="/options">
-                        <button className="bg-green-600 hover:bg-green-700 duration-100 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-9">
+                        <button  className="bg-green-600 hover:bg-green-700 duration-100 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-9">
                             Ingresar
                         </button>
                     </Link>
