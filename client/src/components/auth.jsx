@@ -18,9 +18,10 @@ function Authsl() {
 
 
     const generarNombreAleatorio = () => {
-        const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-        let nombreAleatorio = 'INVITADO';
-        for (let i = 0; i < 5; i++) {
+        const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let nombreAleatorio = 'INVITADO-';
+        for (let i = 0; i < 4; i++) {
+            console.log("hoa")
             nombreAleatorio += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
         }
         return nombreAleatorio;
@@ -29,9 +30,9 @@ function Authsl() {
     const handleEnterUser = async () => {
         const userNameT = userName;
         if (userNameT == ""){
-            userNameT == generarNombreAleatorio()
-            setUserData({...userData, userName: userNameT})
-            setFormStep(4)
+            const guesUsername = generarNombreAleatorio()
+            setUserData({userId:undefined, userName: guesUsername ,userGuest:true})
+            navigate("/options")
             console.log(userData,userNameT,formStep)
         }else{
             
@@ -63,7 +64,7 @@ function Authsl() {
             console.log("El usuario y contraseña son correctos",userName)
             document.cookie = `userId=${userId}; expires=Thu, 01 Jan 2070 00:00:00 UTC; path=/;`;
             document.cookie = `userPassword=${UserPassword}; expires=Thu, 01 Jan 2070 00:00:00 UTC; path=/;`;
-            setUserData({...userData,userId,userName})
+            setUserData({...userData,userId,userName, userGuest: false})
             navigate("/options")
 
         } else {

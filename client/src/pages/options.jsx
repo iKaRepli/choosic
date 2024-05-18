@@ -6,7 +6,13 @@ import { ContextoUsuario } from '../context/contextoUsuario'
 
 export default function Options() {
   const { userData, setUserData } = useContext(ContextoUsuario)
+  const [isConnected, setIsConnected] = useState(false)
   console.log(userData)
+  const useEffect = () => {
+    if (userData.userGuest === true) {
+      setIsConnected(false)
+    }
+  }
 
   return (
     <div className="my-container  flex flex-col bg-gradient-to-r from-emerald-950 to-green-700">
@@ -23,7 +29,8 @@ export default function Options() {
           <p className="text-green-600 mb-8 font-bold">Conectate a salas y vota en tiempo real</p>
           <div className="justify-center flex w-90 ">
             <Link to="/room"> <button className="bg-amber-900 hover:bg-amber-950  duration-150 border  text-white px-4 py-2 rounded-md mx-4">Ingresar a Sala</button></Link>
-            <Link to="/createRoom"><button className="bg-amber-900 hover:bg-amber-950 duration-150 text-white px-4 py-2 rounded-md mx-4">Crear sala</button></Link>
+            <Link to="/createRoom"><button disabled={isConnected} className="bg-amber-900 hover:bg-amber-950 duration-150 text-white px-4 py-2 rounded-md mx-4">Crear sala</button></Link>
+
           </div>
 
 

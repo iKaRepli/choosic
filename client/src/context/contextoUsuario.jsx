@@ -9,7 +9,8 @@ export const MiContextoProvider = ({ children }) => {
   const [userData, setUserData] = useState({
     userName: undefined,
     userId: undefined,
-    userGuest: undefined
+    userGuest: undefined,
+    spotify: false
   });
 
   return (

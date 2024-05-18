@@ -25,7 +25,8 @@ export default function Principal() {
     const [userValues, setUserValues] = useState({
         userName: undefined,
         userPasswords: undefined,
-        userIds: undefined
+        userIds: undefined,
+        spotify: false
     })
     const [isLogged, setIsLogged] = useState(false)
 
@@ -44,9 +45,12 @@ export default function Principal() {
 
                 if (userValues.userIds != data.user_id) {
                     console.log("hola como estas", data)
+                    if(data.refresh_token !== null){
+                        setUserValues({spotify: true})
+                    }
                     setisLoafing(false)
                     setIsLogged(true)
-                    setUserValues({
+                    setUserValues(...userValues,{
                         userName: data.user_name,
                         userIds: data.user_id,
                         userPasswords: data.user_password
@@ -112,7 +116,7 @@ export default function Principal() {
 
                     </div>
                 ) :
-                    isLogged ? <Join userName={userValues.userName} handleLogout={handleLogout}></Join> : <Authsl></Authsl>
+                    isLogged ? <Join userName={userValues.userName} userId = {userValues.userIds} userGuest ={false} spotify ={userValues.spotify}handleLogout={handleLogout}></Join> : <Authsl></Authsl>
             }
         </div>
     )

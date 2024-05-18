@@ -1,14 +1,16 @@
 
 import io from 'socket.io-client'
-import { useState } from 'react'
+import { useEffect, useState,useContext } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { ContextoUsuario } from '../context/contextoUsuario'
 
 
 
 
 export default function CreateRoom() {
-    const [connection, setConecction] = useState(false)
     const navigate = useNavigate()
+    const { userData, setUserData } = useContext(ContextoUsuario)
+
 
 
     const handleCreateRoom = async () => {
@@ -18,26 +20,109 @@ export default function CreateRoom() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                
+
             });
 
-            if(response.ok){
+            if (response.ok) {
 
                 const data = await response.json()
 
-                console.log("Sala creada correctamente",data.roomCode)
+                console.log("Sala creada correctamente", data.roomCode)
 
                 navigate(`../room/${data.roomCode}`)
-                
 
-            }else{
+
+            } else {
                 console.log("No se pudo creear la sala")
             }
-        }catch (err) {
-            console.log(err)    
+        } catch (err) {
+            console.log(err)
         }
 
     }
+
+
+    const spotifyOkComponent = () => {
+        return (
+            <>
+
+                <div className="mb-8" >
+                    <h1 className="block text-gray-70 0 font-bold mb-2 text-2xl" htmlFor="username">
+                        ¡Estas a punto de crear una sala!
+                    </h1>
+                    <h4>
+                        Presiona OK para confirmar, te redirigiremos a la sala automaticamente
+                    </h4>
+
+                </div>  
+
+                <div className="mb-4">
+                    <button
+                        onClick={handleCreateRoom}
+                        className="bg-amber-900 hover:bg-amber-950 duration-100 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
+                        OK
+                    </button>
+
+                </div >
+            </>
+        )
+    }
+
+    const spotifyUnconnected = () => {
+        return (
+            <>
+
+                <div className="mb-8" >
+                    <h1 className="block text-gray-70 0 font-bold mb-2 text-2xl" htmlFor="username">
+                        ¡Este usuario no esta conectado con spotify!
+                    </h1>
+                    <h4>
+                        Ve al inicio y conecta tu cuenta de spotify para poder crear salas
+                    </h4>
+
+                </div>
+
+                <div className="mb-4">
+                    <button
+                        onClick={handleCreateRoom}
+                        className="bg-amber-900 hover:bg-amber-950 duration-100 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
+                        OK
+                    </button>
+
+                </div >
+            </>
+        )
+    }
+    const userGuest = () => {
+        return (
+            <>
+
+                <div className="mb-8" >
+                    <h1 className="block text-gray-70 0 font-bold mb-2 text-2xl" htmlFor="username">
+                        ¡El usuario es un invitado!
+                    </h1>
+                    <h4>
+                        Este usuario no puede crear salas, ya que es un invitado
+                    </h4>
+
+                </div>
+
+                <div className="mb-4">
+                    <button
+                        onClick={handleCreateRoom}
+                        className="bg-amber-900 hover:bg-amber-950 duration-100 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
+                        OK
+                    </button>
+
+                </div >
+            </>
+        )
+    }
+
+
 
     return (
         <div className='my-container h-screen flex flex-col  bg-gradient-to-r from-emerald-950 to-green-700'>
@@ -47,10 +132,9 @@ export default function CreateRoom() {
                 </button>
                 </Link>
             </div>
-            <div className="bg-green-100 shadow-md rounded px-8 w-content pt-6 pb-8 mb-4 mx-auto text-center"
-
-            >
-                <div className="mb-8" >
+            <div className="bg-green-100 shadow-md rounded px-8 w-content pt-6 pb-8 mb-4 mx-auto text-center">
+                
+            <div className="mb-8" >
                     <h1 className="block text-gray-70 0 font-bold mb-2 text-2xl" htmlFor="username">
                         ¡Estas a punto de crear una sala!
                     </h1>
@@ -68,7 +152,7 @@ export default function CreateRoom() {
                         OK
                     </button>
 
-                </div>
+                </div >
             </div>
         </div>
 
