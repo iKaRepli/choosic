@@ -1,17 +1,18 @@
 
 import io from 'socket.io-client'
 import { useContext, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, redirect, useNavigate } from 'react-router-dom'
 import { ContextoUsuario } from '../context/contextoUsuario'
 
 export default function Options() {
   const { userData, setUserData } = useContext(ContextoUsuario)
   const [isConnected, setIsConnected] = useState(false)
+  const navigate = useNavigate()
+
   console.log(userData)
-  const useEffect = () => {
-    if (userData.userGuest === true) {
-      setIsConnected(false)
-    }
+
+  const handelLoginSpotify = () => {
+    window.location.href = `http://localhost:3003/api/login/${userData.userId}`;
   }
 
   return (
@@ -30,7 +31,7 @@ export default function Options() {
           <div className="justify-center flex w-90 ">
             <Link to="/room"> <button className="bg-amber-900 hover:bg-amber-950  duration-150 border  text-white px-4 py-2 rounded-md mx-4">Ingresar a Sala</button></Link>
             <Link to="/createRoom"><button disabled={isConnected} className="bg-amber-900 hover:bg-amber-950 duration-150 text-white px-4 py-2 rounded-md mx-4">Crear sala</button></Link>
-
+            <button className="bg-amber-900 hover:bg-amber-950 duration-150 text-white px-4 py-2 rounded-md mx-4" onClick={handelLoginSpotify} >Link Spotify</button>
           </div>
 
 

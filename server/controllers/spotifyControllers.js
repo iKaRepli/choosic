@@ -1,5 +1,5 @@
 import mysql from 'mysql2/promise';
-
+import { getTokenByRoom } from './userControllers.js';
 
 const connection = await mysql.createConnection({
     host: 'localhost',
@@ -16,7 +16,7 @@ const client_id = '7ad579293238465b9d93166f809726a0';
 export function callbackSpotify(req, res) {
     const code = req.query.code || null;
     const state = req.query.state || null;
-    console.log(code,state)
+    console.log(code, state)
 
     if (state === null) {
         res.redirect('/#' +
@@ -51,12 +51,43 @@ export function callbackSpotify(req, res) {
                         console.error(error);
                         res.redirect('http://localhost:5173/callback/access_denied');
                     });
-                
+
             })
             .catch(error => {
                 console.error(error);
                 res.redirect('http://localhost:5173/callback/access_denied');
             });
     }
-   
+
 }
+
+
+    export async function searchSongs(roomCode, query) {
+
+        const queryParams = new URLSearchParams({
+            q: query,
+            type: "track",
+            limit: "10"
+        })
+
+        const tokens = await getTokenByRoom({ body: {roomCode} });
+
+        const token = tokens.token
+        console.log("Estas son los tokents",tokens)
+        const headers = {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+
+
+        const url = `https://api.spotify.com/v1/search?${queryParams.toString()}`;
+
+        const result = await fetch(url, { headers })
+        
+        if(!result.ok){
+            throw new Error("Error al buscar canciones")
+        }
+
+        const data = await result.json()
+        return data;
+    }

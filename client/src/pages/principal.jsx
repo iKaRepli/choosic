@@ -26,7 +26,8 @@ export default function Principal() {
         userName: undefined,
         userPasswords: undefined,
         userIds: undefined,
-        spotify: false
+        spotify: false,
+        token:""
     })
     const [isLogged, setIsLogged] = useState(false)
 
@@ -44,17 +45,28 @@ export default function Principal() {
                 const data = await response.json()
 
                 if (userValues.userIds != data.user_id) {
-                    console.log("hola como estas", data)
+                    console.log("hola como essas", data)
                     if(data.refresh_token !== null){
-                        setUserValues({spotify: true})
-                    }
-                    setisLoafing(false)
-                    setIsLogged(true)
-                    setUserValues(...userValues,{
-                        userName: data.user_name,
-                        userIds: data.user_id,
-                        userPasswords: data.user_password
-                    })
+                        console.log("Me la pela",data)
+                        setUserValues({...userValues,
+                            userName: data.user_name,
+                            userIds: data.user_id,
+                            userPasswords: data.user_password,
+                            token: data.token,
+                            spotify: true,
+                            token: data.token})
+                        }else{
+
+                            setUserValues({
+                                userName: data.user_name,
+                                userIds: data.user_id,
+                                userPasswords: data.user_password,
+                                spotify: false
+                            })
+                        }
+                        setisLoafing(false)
+                        setIsLogged(true)
+                        
                 }
 
             } else {
@@ -78,35 +90,7 @@ export default function Principal() {
         setIsLogged(false);
 
     }
-    async function createUser() {
-        const url = 'http://localhost:3003/api/register'; // La URL a la que quieres enviar la solicitud POST
-        const data = {
-          userName: 'pele',
-          password: '123456'
-        };
       
-        try {
-          const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-          });
-      
-          if (!response.ok) {
-            throw new Error('Error al crear el usuario: ' + response.status);
-          }
-      
-          const responseData = await response.json();
-          console.log(responseData);
-        } catch (error) {
-          console.error('Error al hacer la solicitud POST:', error);
-        }
-      }
-      
-      
-
     return (
         <div className='my-container h-screen flex flex-col  bg-gradient-to-r from-emerald-950 to-green-700'>
             {
@@ -116,7 +100,15 @@ export default function Principal() {
 
                     </div>
                 ) :
-                    isLogged ? <Join userName={userValues.userName} userId = {userValues.userIds} userGuest ={false} spotify ={userValues.spotify}handleLogout={handleLogout}></Join> : <Authsl></Authsl>
+                    isLogged ? <Join 
+                    userName={userValues.userName} 
+                    userId = {userValues.userIds} 
+                    userGuest ={false} 
+                    spotify ={userValues.spotify}
+                    token = {userValues.token}
+                    handleLogout={handleLogout}>
+                     {console.log("User values que pase ",  userValues)}   
+                    </Join> : <Authsl></Authsl>
             }
         </div>
     )

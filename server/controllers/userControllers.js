@@ -72,3 +72,19 @@ export async function getUserByName(req, res) {
       res.status(500).json({ message: 'Error del servidor' });
     }
   }
+  export async function getTokenByRoom(req, res) {
+    try {
+        const {roomCode}= req.body;
+
+        const [rows] = await connection.execute('SELECT token FROM rooms WHERE room_code = ?', [roomCode]);
+
+        if (rows.length > 0) {
+            return rows[0]
+        } else {
+            res.status(404).json({ error: 'No se encontró ningún token para la sala especificada' });
+        }
+    } catch (err) {
+        console.error('Error al obtener el token de la sala:', err);
+        res.status(500).json({ error: 'Error del servidor al obtener el token de la sala' });
+    }
+}

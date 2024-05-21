@@ -5,9 +5,9 @@ import { Server as SocketServer } from 'socket.io'
 import cors from 'cors'
 
 import querystring from 'querystring';
-import { createRoom, joinRoom, getRoomByName } from './controllers/roomController.js'
-import { createUser, getUserById, getUserByName } from './controllers/userControllers.js';
-import { callbackSpotify } from './controllers/spotifyControllers.js'
+import { createRoom, joinRoom, getRoomByName, putSongOnRoom } from './controllers/roomController.js'
+import { createUser, getUserById, getUserByName} from './controllers/userControllers.js';
+import { callbackSpotify, searchSongs } from './controllers/spotifyControllers.js'
 
 
 
@@ -41,6 +41,18 @@ io.on('connection', socket => {
 
   })
 
+  socket.on('searchSong',async(data) => {
+    try{
+      const searchResults = await searchSongs(data.roomCode,data.query)
+
+      socket.emit('resultados-busqueda',searchResults)
+
+    }catch(err){
+      console.log("Error al buscar la cancion",err)
+    }
+
+  })
+
   socket.on('disconnect', () => {
     console.log(`Usuario ${socket.id} desconectado`)
   })
@@ -53,6 +65,7 @@ app.get('/api/name/:userName', getUserByName)
 app.get('/api/room/:roomCode', getRoomByName)
 app.post('/api/register', createUser)
 app.post('/api/createRoom', createRoom)
+app.post('/api/agregar/cancion', putSongOnRoom)
 
 
 

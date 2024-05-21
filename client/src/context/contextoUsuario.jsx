@@ -10,7 +10,8 @@ export const MiContextoProvider = ({ children }) => {
     userName: undefined,
     userId: undefined,
     userGuest: undefined,
-    spotify: false
+    spotify: false,
+    token: ""
   });
 
   return (

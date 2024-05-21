@@ -9,7 +9,7 @@ export default function Join(props) {
 
     const handlePutContext = () => {
         
-        setUserData({...userData,userName: props.userName, userId: props.userId})
+        setUserData({...userData,userName: props.userName, userId: props.userId, spotify: props.spotify, token : props.token})
     }
     return (
         
@@ -29,7 +29,7 @@ export default function Join(props) {
                 <div className="mb-4 ">
                     <Link to="/options">
                         <button  onClick={handlePutContext} className="bg-green-600 hover:bg-green-700 duration-100 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-9">
-                        {console.log(props)}
+                        {console.log("has",props)}
                             Ingresar
                         </button>
                     </Link>

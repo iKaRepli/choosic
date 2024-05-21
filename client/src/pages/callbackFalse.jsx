@@ -17,7 +17,6 @@ export default function CallbackFalse() {
         </Link>
       </div>
       <div className='h-screen w-full items-center justify-center'>
-
         <h1 className='font-bold text-center mt-24 text-white text-4xl'>Oh no, ha sucedido un error al intentar conectarte</h1>
 
 
